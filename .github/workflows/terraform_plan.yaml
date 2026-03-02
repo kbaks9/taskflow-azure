@@ -1,0 +1,15 @@
+name: Terraform Plan
+
+on:
+  pull_request:
+    branches:
+     - main
+    paths:
+      - 'terraform/**'
+
+jobs:
+  terraform_plan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
