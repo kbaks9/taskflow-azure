@@ -1,0 +1,74 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/**'
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: |
+            {
+              "clientId": "${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}",
+              "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+              "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
+            }
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.2
+
+      - name: Create tfvars
+        working-directory: terraform
+        run: |
+          cat > terraform.tfvars <<EOF
+          resource_group                = "${{ secrets.TF_RESOURCE_GROUP }}"
+          location                      = "${{ secrets.TF_LOCATION }}"
+          app_name                      = "${{ secrets.TF_APP_NAME }}"
+          env_name                      = "${{ secrets.TF_ENV_NAME }}"
+          container_name                = "${{ secrets.TF_CONTAINER_NAME }}"
+          image_tag                     = "${{ secrets.TF_IMAGE_TAG }}"
+          profile_name                  = "${{ secrets.TF_PROFILE_NAME }}"
+          sku_name                      = "${{ secrets.TF_SKU_NAME }}"
+          ep_name                       = "${{ secrets.TF_EP_NAME }}"
+          fd_group_name                 = "${{ secrets.TF_FD_GROUP_NAME }}"
+          fd_origin_name                = "${{ secrets.TF_FD_ORIGIN_NAME }}"
+          fd_route_name                 = "${{ secrets.TF_FD_ROUTE_NAME }}"
+          custom_name                   = "${{ secrets.TF_CUSTOM_NAME }}"
+          custom_domain_name            = "${{ secrets.TF_CUSTOM_DOMAIN_NAME }}"
+          virtual_network_name          = "${{ secrets.TF_VNET_NAME }}"
+          virtual_network_address_space = "${{ secrets.TF_VNET_ADDRESS_SPACE }}"
+          container_app_subnet_name     = "${{ secrets.TF_SUBNET_NAME }}"
+          container_app_subnet_prefix   = "${{ secrets.TF_SUBNET_PREFIX }}"
+          EOF
+
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+      - name: Terraform Apply
+        working-directory: terraform
+        run: terraform apply -auto-approve
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
