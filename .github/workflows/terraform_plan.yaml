@@ -31,6 +31,30 @@ jobs:
         with:
           terraform_version: 1.12.2
 
+      - name: Create tfvars
+        working-directory: terraform
+        run: |
+          cat > terraform.tfvars <<EOF
+          resource_group                = "${{ secrets.TF_RESOURCE_GROUP }}"
+          location                      = "${{ secrets.TF_LOCATION }}"
+          app_name                      = "${{ secrets.TF_APP_NAME }}"
+          env_name                      = "${{ secrets.TF_ENV_NAME }}"
+          container_name                = "${{ secrets.TF_CONTAINER_NAME }}"
+          image_tag                     = "${{ secrets.TF_IMAGE_TAG }}"
+          profile_name                  = "${{ secrets.TF_PROFILE_NAME }}"
+          sku_name                      = "${{ secrets.TF_SKU_NAME }}"
+          ep_name                       = "${{ secrets.TF_EP_NAME }}"
+          fd_group_name                 = "${{ secrets.TF_FD_GROUP_NAME }}"
+          fd_origin_name                = "${{ secrets.TF_FD_ORIGIN_NAME }}"
+          fd_route_name                 = "${{ secrets.TF_FD_ROUTE_NAME }}"
+          custom_name                   = "${{ secrets.TF_CUSTOM_NAME }}"
+          custom_domain_name            = "${{ secrets.TF_CUSTOM_DOMAIN_NAME }}"
+          virtual_network_name          = "${{ secrets.TF_VNET_NAME }}"
+          virtual_network_address_space = "${{ secrets.TF_VNET_ADDRESS_SPACE }}"
+          container_app_subnet_name     = "${{ secrets.TF_SUBNET_NAME }}"
+          container_app_subnet_prefix   = "${{ secrets.TF_SUBNET_PREFIX }}"
+          EOF
+
       - name: Terraform Init
         working-directory: terraform
         run: terraform init
