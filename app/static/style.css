@@ -37,7 +37,7 @@ header {
   gap: 14px;
 }
 
-/* KB initials circle */
+/* KB initials */
 .avatar {
   width: 44px;
   height: 44px;
@@ -100,7 +100,6 @@ header h1 {
   margin-bottom: 18px;
 }
 
-/* little purple pill showing task count */
 .task-badge {
   background: rgba(124, 110, 247, 0.18);
   color: #7c6ef7;
@@ -110,10 +109,11 @@ header h1 {
   font-weight: 600;
 }
 
-/* ── Individual task card ─────────────────────── */
+/* ── Active task card — purple theme ──────────── */
 .task {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(124, 110, 247, 0.07);
+  border: 1px solid rgba(124, 110, 247, 0.20);
+  border-left: 3px solid #7c6ef7;
   border-radius: 14px;
   padding: 16px 20px;
   margin-bottom: 10px;
@@ -123,33 +123,66 @@ header h1 {
 }
 
 .task:hover {
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(124, 110, 247, 0.12);
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
 }
 
-/* task slides up when it appears */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* icon + title on same row */
+.task-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+/* ○ when active, ✓ when done */
+.task-icon {
+  font-size: 0.9rem;
+  color: #7c6ef7;
+  flex-shrink: 0;
 }
 
 .task h3 {
   font-size: 0.92rem;
   font-weight: 600;
   color: #eef0f7;
-  margin-bottom: 4px;
 }
 
 .task p {
   font-size: 0.82rem;
   color: rgba(238, 240, 247, 0.55);
   line-height: 1.5;
+  margin-left: 22px;
 }
 
-/* buttons inside each task */
-.task-actions {
+/* bottom row — pill on left, buttons on right */
+.task-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 12px;
+}
+
+/* Active / Done pill */
+.status-pill {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(124, 110, 247, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 110, 247, 0.25);
+}
+
+.task-actions {
   display: flex;
   gap: 8px;
 }
@@ -179,32 +212,39 @@ header h1 {
 }
 .btn-delete:hover { background: rgba(248, 113, 113, 0.18); }
 
-/* completed task — faded card with green left border */
+/* ── Completed task card — green theme ────────── */
 .task.completed {
-  background: rgba(74, 222, 128, 0.04);
+  background: rgba(74, 222, 128, 0.05);
   border-color: rgba(74, 222, 128, 0.20);
   border-left: 3px solid #4ade80;
-  opacity: 0.65;
+  opacity: 0.70;
 }
+
+.task.completed:hover {
+  background: rgba(74, 222, 128, 0.09);
+}
+
+.task.completed .task-icon { color: #4ade80; }
 
 .task.completed h3 {
   text-decoration: line-through;
-  color: rgba(238, 240, 247, 0.40);
+  color: rgba(238, 240, 247, 0.35);
 }
 
-.task.completed p {
-  color: rgba(238, 240, 247, 0.25);
+.task.completed p { color: rgba(238, 240, 247, 0.25); }
+
+.task.completed .status-pill {
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.25);
 }
 
-/* swap complete button to muted when already done */
 .task.completed .btn-complete {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(255, 255, 255, 0.10);
-  color: rgba(238, 240, 247, 0.35);
+  color: rgba(238, 240, 247, 0.30);
 }
-.task.completed .btn-complete:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
+.task.completed .btn-complete:hover { background: rgba(255, 255, 255, 0.08); }
 
 /* ── Add task form panel ──────────────────────── */
 #new-task-form {
@@ -270,11 +310,4 @@ header h1 {
 #add-task-form button:hover {
   opacity: 0.9;
   transform: translateY(-1px);
-}
-
-/* ── Mobile ───────────────────────────────────── */
-@media (max-width: 720px) {
-  header { padding: 16px 20px; }
-  #main-content { flex-direction: column; padding: 20px 16px 40px; }
-  #new-task-form { flex: 1; width: 100%; position: static; }
 }
