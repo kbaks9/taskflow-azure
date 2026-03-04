@@ -2,29 +2,33 @@
 FROM python:3.12-alpine AS build
 WORKDIR /app
 
-# Install build dependencies
+# Install build tools
 RUN apk add --no-cache build-base libffi-dev musl-dev linux-headers
 
-# Copy only requirements first (cache layer)
+# Copy requirements first for caching
 COPY app/requirements.txt .
 
-# Install packages into a virtual environment
+# Create virtualenv and install dependencies
 RUN python -m venv /opt/venv && \
     /opt/venv/bin/pip install --upgrade pip && \
     /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
-# Stage 2: Final image
+# Stage 2: Runtime image
 FROM python:3.12-alpine
 WORKDIR /app
 
-# Copy virtual environment from build stage
-COPY --from=build /opt/venv /opt/venv
+# Create non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Copy application code
-COPY app/ ./app
+# Copy virtualenv and app code
+COPY --from=build --chown=appuser:appgroup /opt/venv /opt/venv
+COPY --chown=appuser:appgroup app/ ./app
 
-# Set PATH to use the virtualenv by default
+# Use virtualenv by default
 ENV PATH="/opt/venv/bin:$PATH"
+
+# Run as non-root user
+USER appuser
 
 EXPOSE 8080
 CMD ["python", "app/app.py"]
