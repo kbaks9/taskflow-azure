@@ -1,14 +1,10 @@
-name: Terraform Apply
+name: Terraform Destroy
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'terraform/**'
+  workflow_dispatch:  # manual trigger only
 
 jobs:
-  terraform-apply:
+  terraform-destroy:
     runs-on: ubuntu-latest
 
     steps:
@@ -64,11 +60,14 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
-      - name: Terraform Apply
+      - name: Terraform Destroy
         working-directory: terraform
-        run: terraform apply -auto-approve
+        run: terraform destroy -auto-approve
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+          ##hasn't been tested
+          ##will be tested once terraform apply fully works as intended
