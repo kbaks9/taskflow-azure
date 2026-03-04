@@ -11,7 +11,7 @@ function fetchTasks() {
     .then(data => {
       const container = document.getElementById('task-container');
 
-      // keep the section title, remove only task cards
+      // keep section title, remove old task cards
       const existing = container.querySelectorAll('.task');
       existing.forEach(t => t.remove());
 
@@ -19,25 +19,26 @@ function fetchTasks() {
       const badge = document.getElementById('task-count');
       if (badge) badge.textContent = data.length;
 
-      data.forEach(task => {
+      // reverse so newest tasks appear at top
+      const reversed = [...data].reverse();
+
+      reversed.forEach(task => {
         const taskDiv = document.createElement('div');
         taskDiv.className = task.completed ? 'task completed' : 'task';
         taskDiv.dataset.id = task.id;
 
         taskDiv.innerHTML = `
+          <span class="status-pill">${task.completed ? 'Done' : 'Active'}</span>
           <div class="task-title-row">
-            <span class="task-icon">${task.completed ? '✓' : '○'}</span>
+            <span class="task-icon">${task.completed ? '✓' : '□'}</span>
             <h3>${task.title}</h3>
           </div>
           <p>${task.description}</p>
-          <div class="task-meta">
-            <span class="status-pill">${task.completed ? 'Done' : 'Active'}</span>
-            <div class="task-actions">
-              <button class="btn-complete" onclick="toggleTask('${task.id}', ${task.completed})">
-                ${task.completed ? 'Mark Incomplete' : 'Mark Complete'}
-              </button>
-              <button class="btn-delete" onclick="deleteTask('${task.id}')">Delete</button>
-            </div>
+          <div class="task-actions">
+            <button class="btn-complete" onclick="toggleTask('${task.id}', ${task.completed})">
+              ${task.completed ? 'Mark Incomplete' : 'Mark Complete'}
+            </button>
+            <button class="btn-delete" onclick="deleteTask('${task.id}')">Delete</button>
           </div>
         `;
         container.appendChild(taskDiv);
