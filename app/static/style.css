@@ -37,7 +37,6 @@ header {
   gap: 14px;
 }
 
-/* KB initials */
 .avatar {
   width: 44px;
   height: 44px;
@@ -109,11 +108,11 @@ header h1 {
   font-weight: 600;
 }
 
-/* ── Active task card — purple theme ──────────── */
+/* ── Active task card — dark crimson theme ────── */
 .task {
-  background: rgba(124, 110, 247, 0.07);
-  border: 1px solid rgba(124, 110, 247, 0.20);
-  border-left: 3px solid #7c6ef7;
+  background: rgba(180, 40, 40, 0.07);
+  border: 1px solid rgba(180, 40, 40, 0.22);
+  border-left: 3px solid #b42828;
   border-radius: 14px;
   padding: 16px 20px;
   margin-bottom: 10px;
@@ -123,7 +122,7 @@ header h1 {
 }
 
 .task:hover {
-  background: rgba(124, 110, 247, 0.12);
+  background: rgba(180, 40, 40, 0.12);
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
 }
@@ -131,6 +130,21 @@ header h1 {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* status pill sits at top left */
+.status-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 9px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  background: rgba(180, 40, 40, 0.15);
+  color: #e06060;
+  border: 1px solid rgba(180, 40, 40, 0.30);
 }
 
 /* icon + title on same row */
@@ -141,10 +155,10 @@ header h1 {
   margin-bottom: 4px;
 }
 
-/* ○ when active, ✓ when done */
+/* □ when active, ✓ when done */
 .task-icon {
   font-size: 0.9rem;
-  color: #7c6ef7;
+  color: #e06060;
   flex-shrink: 0;
 }
 
@@ -159,27 +173,7 @@ header h1 {
   color: rgba(238, 240, 247, 0.55);
   line-height: 1.5;
   margin-left: 22px;
-}
-
-/* bottom row — pill on left, buttons on right */
-.task-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 12px;
-}
-
-/* Active / Done pill */
-.status-pill {
-  font-size: 0.68rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: rgba(124, 110, 247, 0.15);
-  color: #a78bfa;
-  border: 1px solid rgba(124, 110, 247, 0.25);
+  margin-bottom: 12px;
 }
 
 .task-actions {
@@ -224,6 +218,12 @@ header h1 {
   background: rgba(74, 222, 128, 0.09);
 }
 
+.task.completed .status-pill {
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.25);
+}
+
 .task.completed .task-icon { color: #4ade80; }
 
 .task.completed h3 {
@@ -232,12 +232,6 @@ header h1 {
 }
 
 .task.completed p { color: rgba(238, 240, 247, 0.25); }
-
-.task.completed .status-pill {
-  background: rgba(74, 222, 128, 0.12);
-  color: #4ade80;
-  border-color: rgba(74, 222, 128, 0.25);
-}
 
 .task.completed .btn-complete {
   background: rgba(255, 255, 255, 0.04);
