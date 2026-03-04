@@ -64,6 +64,7 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
+      # Step 1 - Create ACR first so image can be pushed
       - name: Terraform Apply - resource group and ACR
         working-directory: terraform
         run: |
@@ -76,7 +77,12 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      
+      # Give time to fully propagate before the container app is pulled
+      - name: Wait for ACR to be ready
+        run: sleep 30
 
+      # Step 2 - Push image now that ACR exists
       - name: Login to ACR
         run: az acr login --name cntaskmanager
 
@@ -85,6 +91,7 @@ jobs:
           docker build -t cntaskmanager.azurecr.io/tm-app:latest -f Dockerfile .
           docker push cntaskmanager.azurecr.io/tm-app:latest
 
+      # Step 3 - Create everything else now that image exists in ACR
       - name: Terraform Apply - remaining infrastructure
         working-directory: terraform
         run: terraform apply -auto-approve
