@@ -30,7 +30,7 @@ function fetchTasks() {
         taskDiv.innerHTML = `
           <span class="status-pill">${task.completed ? 'Done' : 'Active'}</span>
           <div class="task-title-row">
-            <span class="task-icon">${task.completed ? '✓' : '□'}</span>
+            <span class="task-icon">${task.completed ? '✓' : '◇'}</span>
             <h3>${task.title}</h3>
           </div>
           <p>${task.description}</p>
