@@ -110,9 +110,9 @@ header h1 {
 
 /* ── Active task card — dark crimson theme ────── */
 .task {
-  background: rgba(180, 40, 40, 0.07);
-  border: 1px solid rgba(180, 40, 40, 0.22);
-  border-left: 3px solid #b42828;
+  background: rgba(45, 212, 191, 0.07);
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  border-left: 3px solid #2dd4bf;
   border-radius: 14px;
   padding: 16px 20px;
   margin-bottom: 10px;
@@ -122,7 +122,7 @@ header h1 {
 }
 
 .task:hover {
-  background: rgba(180, 40, 40, 0.12);
+  background: rgba(45, 212, 191, 0.12);
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
 }
@@ -142,9 +142,9 @@ header h1 {
   padding: 2px 9px;
   border-radius: 20px;
   margin-bottom: 10px;
-  background: rgba(180, 40, 40, 0.15);
-  color: #e06060;
-  border: 1px solid rgba(180, 40, 40, 0.30);
+  background: rgba(45, 212, 191, 0.15);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.30);
 }
 
 /* icon + title on same row */
@@ -158,7 +158,7 @@ header h1 {
 /* □ when active, ✓ when done */
 .task-icon {
   font-size: 0.9rem;
-  color: #e06060;
+  color: #2dd4bf;
   flex-shrink: 0;
 }
 
