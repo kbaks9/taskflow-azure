@@ -97,6 +97,15 @@ header h1 {
   min-width: 0;
 }
 
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2dd4bf;
+  text-shadow: 0 0 16px rgba(45, 212, 191, 0.4);
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+
 .section-title {
   display: flex;
   align-items: center;
