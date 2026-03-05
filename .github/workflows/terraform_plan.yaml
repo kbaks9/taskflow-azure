@@ -34,7 +34,7 @@ jobs:
       - name: Create tfvars
         working-directory: terraform
         run: |
-          cat > terraform.tfvars <<EOF
+          cat > terraform.tfvars <<EOF2
           resource_group                = "${{ secrets.TF_RESOURCE_GROUP }}"
           location                      = "${{ secrets.TF_LOCATION }}"
           app_name                      = "${{ secrets.TF_APP_NAME }}"
@@ -53,7 +53,7 @@ jobs:
           virtual_network_address_space = "${{ secrets.TF_VNET_ADDRESS_SPACE }}"
           container_app_subnet_name     = "${{ secrets.TF_SUBNET_NAME }}"
           container_app_subnet_prefix   = "${{ secrets.TF_SUBNET_PREFIX }}"
-          EOF
+          EOF2
 
       - name: Terraform Init
         working-directory: terraform
