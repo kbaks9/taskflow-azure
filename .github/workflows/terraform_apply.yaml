@@ -28,9 +28,9 @@ jobs:
                   
       - name: Create Terraform state storage
         run: |
-          az group create --name rg-terraform-state --location uksouth
-          az storage account create --name sataskmanagertfstate --resource-group rg-terraform-state --location uksouth --sku Standard_LRS
-          az storage container create --name tfstate --account-name sataskmanagertfstate
+          az group create --name rg-terraform-state --location uksouth || true
+          az storage account create --name sataskmanagertfstate --resource-group rg-terraform-state --location uksouth --sku Standard_LRS || true
+          az storage container create --name tfstate --account-name sataskmanagertfstate || true
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
