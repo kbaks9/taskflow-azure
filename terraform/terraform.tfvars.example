@@ -1,0 +1,29 @@
+# Example of tfvar.
+
+### Resource Group ###
+resource_group = ""
+location       = ""
+
+
+### Container App ###
+app_name       = ""
+env_name       = ""
+container_name = ""
+image_tag      = ""
+
+
+### Front Door ###
+profile_name       = ""
+sku_name           = ""
+ep_name            = ""
+fd_group_name      = ""
+fd_origin_name     = ""
+fd_route_name      = ""
+custom_name        = ""
+custom_domain_name = ""
+
+### Network ###
+virtual_network_name          = ""
+virtual_network_address_space = ""
+container_app_subnet_name     = ""
+container_app_subnet_prefix   = ""
