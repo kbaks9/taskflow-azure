@@ -23,9 +23,9 @@ jobs:
             }
 
       - name: Setup Terraform
-        uses: hasicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v3
         with:
-          terraform_Version: 1.12.2
+          terraform_version: 1.12.2
 
       - name: Create tfvars
         working-directory: terraform
