@@ -41,7 +41,7 @@ jobs:
          image-ref: cntaskmanager.azurecr.io/tm-app:${{ github.sha }}
          format: table
          exit-code: 0
-         severity: CRITICAL, HIGH
+         severity: CRITICAL,HIGH
 
      - name: Push Docker image
        run: docker push cntaskmanager.azurecr.io/tm-app:${{ github.sha }}
