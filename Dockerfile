@@ -35,4 +35,4 @@ USER appuser
 
 EXPOSE 8080
 CMD ["python", "app/app.py"]
-# trivy test 2
+# trivy test with downloadable file 3
