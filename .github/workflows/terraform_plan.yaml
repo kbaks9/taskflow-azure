@@ -15,6 +15,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkov scan
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: terraform
+          framework: terraform
+          soft_fail: true # will only warn with true, it won't fail the pipeline
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
