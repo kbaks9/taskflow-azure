@@ -39,9 +39,16 @@ jobs:
        uses: aquasecurity/trivy-action@master
        with:
          image-ref: cntaskmanager.azurecr.io/tm-app:${{ github.sha }}
-         format: table
+         format: sarif
+         output: trivy-results.sarif
          exit-code: 0
          severity: CRITICAL,HIGH
+
+     - name: Upload Trivy results as artefact
+       uses: actions/upload-artifact@v4
+       with:
+         name: trivy-results
+         path: trivy-results.sarif
 
      - name: Push Docker image
        run: docker push cntaskmanager.azurecr.io/tm-app:${{ github.sha }}
