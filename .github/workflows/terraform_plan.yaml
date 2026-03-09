@@ -22,6 +22,17 @@ jobs:
           framework: terraform
           soft_fail: true # will only warn with true, it won't fail the pipeline
 
+      - name: TFLint scan
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: latest
+
+      - name: Run TFLint
+        working-directory: terraform
+        run: |
+          tflint --init
+          tflint --recursive
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
